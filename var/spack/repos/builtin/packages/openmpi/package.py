@@ -621,6 +621,9 @@ class Openmpi(AutotoolsPackage):
         perl('autogen.pl')
 
     def setup_build_environment(self, env):
+        # Set MACOSX_DEPLOYMENT_TARGET to 10.x due to old configure
+        super(Openmpi, self).setup_build_environment(env)
+
         if '~gpfs' in self.spec:
             env.set('ac_cv_header_gpfs_h', 'no')
             env.set('ac_cv_header_gpfs_fcntl_h', 'no')
