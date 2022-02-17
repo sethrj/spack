@@ -162,6 +162,13 @@ class Hdf5(CMakePackage):
 
     patch('fortran-kinds.patch', when='@1.10.7')
 
+    # This patch may only be needed with GCC11.2 on macOS, but it's valid for
+    # any of the head HDF5 versions as of 12/2021. Since it's impossible to
+    # tell what Fortran version is part of a mixed apple-clang toolchain on
+    # macOS (which is the norm) we just apply it for all `os=monterey`.
+    patch('gcc11-macos.patch',
+          when='@1.8.22,1.10.8,1.12.1 platform=darwin os=monterey')
+
     # The argument 'buf_size' of the C function 'h5fget_file_image_c' is
     # declared as intent(in) though it is modified by the invocation. As a
     # result, aggressive compilers such as Fujitsu's may do a wrong
