@@ -58,7 +58,7 @@ def canonical_deptype(deptype):
         if bad:
             raise ValueError(
                 'Invalid dependency types: %s' % ','.join(str(t) for t in bad))
-        return tuple(sorted(set(deptype)))
+        return tuple(sorted(deptype))
 
     raise ValueError('Invalid dependency type: %s' % repr(deptype))
 
