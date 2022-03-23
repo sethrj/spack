@@ -630,7 +630,12 @@ class YamlFilesystemView(FilesystemView):
         src = spack.store.layout.metadata_path(spec)
         tgt = self.get_path_meta_folder(spec)
 
-        tree = LinkTree(src)
+        try:
+            tree = LinkTree(src)
+        except IOError as e:
+            # Spack directory is missing, perhaps an ignorant user deleted it?
+            tty.warn(str(e))
+            return
         # there should be no conflicts when linking the meta folder
         tree.merge(tgt, link=self.link)
 
