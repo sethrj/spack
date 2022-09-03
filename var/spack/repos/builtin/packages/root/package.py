@@ -413,6 +413,8 @@ class Root(CMakePackage):
         # ###################### Boolean Options ######################
         # For option list format see _process_opts(), below.
 
+        runtime_cxxmodules = spec.version >= Version('6.26')
+
         # Options controlling gross build / config behavior.
         options += [
             define('cxxmodules', False),
@@ -423,10 +425,10 @@ class Root(CMakePackage):
             define_from_variant('gminimal'),
             define('gnuinstall', False),
             define('libcxx', False),
-            define('pch', True),
+            define('pch', not runtime_cxxmodules),
             define('roottest', False),
             define_from_variant('rpath'),
-            define('runtime_cxxmodules', False),
+            define('runtime_cxxmodules', runtime_cxxmodules),
             define('shared', True),
             define('soversion', True),
             define('testing', self.run_tests),
