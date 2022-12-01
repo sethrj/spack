@@ -210,19 +210,21 @@ class Root(CMakePackage):
     depends_on("zstd", when="@6.20:")
 
     # X-Graphics
-    depends_on("libx11", when="+x")
-    depends_on("libxext", when="+x")
-    depends_on("libxft", when="+x")
-    depends_on("libxpm", when="+x")
-    depends_on("libice", when='+x')
-    depends_on("libsm", when="+x")
+    with when("+x"):
+        depends_on("libice")
+        depends_on("libsm")
+        depends_on("libx11")
+        depends_on("libxext")
+        depends_on("libxft")
+        depends_on("libxpm")
 
     # OpenGL
-    depends_on("ftgl@2.4.0:", when="+opengl")
-    depends_on("glew", when="+opengl")
-    depends_on("gl2ps", when="+opengl")
-    depends_on("gl", when="+opengl")
-    depends_on("glu", when="+opengl")
+    with when("+opengl"):
+        depends_on("ftgl@2.4.0:")
+        depends_on("glew")
+        depends_on("gl2ps")
+        depends_on("gl")
+        depends_on("glu")
 
     # Qt4
     depends_on("qt@:4", when="+qt4")
@@ -234,6 +236,13 @@ class Root(CMakePackage):
     # be fixed in 6.20.06.
     # See: https://sft.its.cern.ch/jira/browse/ROOT-10626
     depends_on("py-numpy", type=("build", "run"), when="@6.20.00:6.20.05 +python")
+
+    # R
+    with when("+r"):
+        depends_on("r", type=("build", "run"))
+        depends_on("r-rcpp", type=("build", "run"))
+        depends_on("r-rinside", type=("build", "run"))
+        depends_on("readline")
 
     # Optional dependencies
     depends_on("arrow", when="+arrow")
@@ -252,10 +261,6 @@ class Root(CMakePackage):
     depends_on("postgresql", when="+postgres")
     depends_on("pythia6+root", when="+pythia6")
     depends_on("pythia8", when="+pythia8")
-    depends_on("r", when="+r", type=("build", "run"))
-    depends_on("r-rcpp", when="+r", type=("build", "run"))
-    depends_on("r-rinside", when="+r", type=("build", "run"))
-    depends_on("readline", when="+r")
     depends_on("shadow", when="+shadow")
     depends_on("sqlite", when="+sqlite")
     depends_on("tbb", when="+tbb")
