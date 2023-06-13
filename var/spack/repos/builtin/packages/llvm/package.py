@@ -735,6 +735,7 @@ class Llvm(CMakePackage, CudaPackage):
             define("LLVM_ENABLE_RTTI", True),
             define("LLVM_ENABLE_EH", True),
             define("LLVM_ENABLE_LIBXML2", False),
+            define("LLVM_INCLUDE_TESTS", False),
             define("CLANG_DEFAULT_OPENMP_RUNTIME", "libomp"),
             define("PYTHON_EXECUTABLE", python.command.path),
             define("LIBOMP_USE_HWLOC", True),
@@ -795,8 +796,10 @@ class Llvm(CMakePackage, CudaPackage):
 
         if "+lldb" in spec:
             projects.append("lldb")
-            cmake_args.append(define("LLDB_ENABLE_LIBEDIT", True))
-            cmake_args.append(define("LLDB_ENABLE_CURSES", True))
+            cmake_args.extend([
+                define("LLDB_ENABLE_LIBEDIT", True),
+                define("LLDB_ENABLE_CURSES", True),
+            ])
             if spec["ncurses"].satisfies("+termlib"):
                 cmake_args.append(define("LLVM_ENABLE_TERMINFO", True))
             else:
