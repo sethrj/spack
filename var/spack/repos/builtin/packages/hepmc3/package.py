@@ -16,10 +16,11 @@ class Hepmc3(CMakePackage):
 
     tags = ["hep"]
 
-    maintainers("vvolkl")
+    maintainers("vvolkl", "sethrj")
 
     license("LGPL-3.0-or-later")
 
+    version("3.3.0", sha256="6f876091edcf7ee6d0c0db04e080056e89efc1a61abe62355d97ce8e735769d6")
     version("3.2.7", sha256="587faa6556cc54ccd89ad35421461b4761d7809bc17a2e72f5034daea142232b")
     version("3.2.6", sha256="248f3b5b36dd773844cbe73d51f60891458334b986b259754c59dbf4bbf1d525")
     version("3.2.5", sha256="cd0f75c80f75549c59cc2a829ece7601c77de97cb2a5ab75790cac8e1d585032")
@@ -32,11 +33,7 @@ class Hepmc3(CMakePackage):
     version("3.1.1", sha256="2fcbc9964d6f9f7776289d65f9c73033f85c15bf5f0df00c429a6a1d8b8248bb")
     version("3.1.0", sha256="cd37eed619d58369041018b8627274ad790020a4714b54ac05ad1ebc1a6e7f8a")
 
-    depends_on("c", type="build")  # generated
-    depends_on("cxx", type="build")  # generated
-    depends_on("fortran", type="build")  # generated
-    # note that version 3.0.0 is not supported
-    # conflicts with cmake configuration
+    depends_on("cxx", type="build")
 
     variant("protobuf", default=False, description="Enable Protobuf I/O")
     variant("python", default=False, description="Enable Python bindings")
