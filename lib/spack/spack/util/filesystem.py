@@ -675,8 +675,9 @@ def chmod_x(entry, perms):
     """Implements chmod, treating all executable bits as set using the chmod
     utility's ``+X`` option.
     """
-    mode = os.stat(entry).st_mode
-    if os.path.isfile(entry):
+    st = os.stat(entry)
+    if stat.S_ISREG(st.st_mode):
+        mode = st.st_mode
         if not mode & (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH):
             perms &= ~stat.S_IXUSR
             perms &= ~stat.S_IXGRP
